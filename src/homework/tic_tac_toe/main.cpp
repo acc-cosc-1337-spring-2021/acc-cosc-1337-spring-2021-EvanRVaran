@@ -6,7 +6,6 @@ using std::cin; using std::cout;
 int main() 
 {
 	std::string stringInput;
-	int intInput;
 	bool exitProgram;
 	TicTacToeBoard tttB;
 	do
@@ -19,9 +18,9 @@ int main()
 		}
 		while(stringInput != "X" && stringInput != "O");
 		tttB.start_game(stringInput);
-		do
+		while(tttB.game_over() == false)
 		{
-			cout << "Enter where you would like to mark the board (1-9): ";
+			cout << "Enter where the current player would like to mark the board (1-9): ";
 			cin >> stringInput;
 			
 			if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9")
@@ -30,12 +29,20 @@ int main()
 				tttB.mark_board(stoi(stringInput));
 				cout << "The board currently looks like this: ";
 				tttB.display_board();
-				cout << " \n And for the next player: \n";
+				cout << "\n";
 			}
 		}
-		while(tttB.game_over() == false);
-		cout << "Game Over!";
-		
+		cout << " \n Game Over! \n";
+		std::string winner = tttB.get_winner();
+
+		if (winner != "C")
+		{
+			cout << "The winner is: " + winner;
+		}
+		else
+		{
+			cout <<"The game is a tie!";
+		}
 		cout << " \nWould you like to play again? (type y for yes and anything else for no): ";
 		cin >> stringInput;
 
