@@ -3,8 +3,6 @@
 #include<string>
 using std::cin; using std::cout;
 
-// TicTacToeBoard tTTB;
-
 bool TicTacToeBoard::game_over()
 {
     bool column_win;
@@ -41,18 +39,6 @@ void TicTacToeBoard::mark_board(int position)
 std::string TicTacToeBoard::get_player()const
 {
     return player;
-}
-
-void TicTacToeBoard::display_board()const
-{
-    for(int i = 0; i < 9; i++)
-    {
-        if(i % 3 == 0)
-        {
-            cout << "\n";
-        }
-        cout << pegs[i] + " ";
-    }
 }
 
 bool TicTacToeBoard::check_board_full()
@@ -141,3 +127,29 @@ void TicTacToeBoard::set_winner()
         }
     }
 }   
+std::ostream& operator<<(std::ostream& out, const TicTacToeBoard& game)
+{
+    for(int i = 0; i < 9; i++)
+    {
+        if(i % 3 == 0)
+        {
+            out << "\n";
+        }
+        out << game.pegs[i] + " "; //?
+    }
+    return out;
+}
+std::istream& operator>>(std::istream& in, TicTacToeBoard& game)
+{
+    std::string stringInput;
+    cout << "Enter where the current player would like to mark the board (1-9): ";
+    in >> stringInput;
+    if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9")
+	{
+		game.mark_board(stoi(stringInput));
+		cout << "The board currently looks like this: ";
+        cout << game;
+		cout << "\n";
+	}
+    return in;
+}

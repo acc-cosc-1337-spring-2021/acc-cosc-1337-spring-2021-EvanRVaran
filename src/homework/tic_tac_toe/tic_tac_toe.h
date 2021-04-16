@@ -7,8 +7,9 @@ class TicTacToeBoard
         void start_game(std::string first_player);
         void mark_board(int position);
         std::string get_player()const;
-        void display_board()const;
         std::string get_winner();
+        friend std::ostream& operator<<(std::ostream& out, const TicTacToeBoard& game);
+        friend std::istream& operator>>(std::istream& in, TicTacToeBoard& game);
 
     private:
         void set_next_player();

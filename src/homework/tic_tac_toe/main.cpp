@@ -1,39 +1,38 @@
-#include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 #include<iostream>
 #include<string>
-
 using std::cin; using std::cout;
+
 int main() 
 {
 	std::string stringInput;
 	bool exitProgram;
 	TicTacToeBoard tttB;
+	TicTacToeManager tttM;
+	int number_O_Wins = 0;
+	int number_X_Wins = 0;
+	int number_ties = 0;
+
 	do
 	{
 		do
 		{
 			cout << "Who is the first player? Enter either 'X' or 'O': ";
 			cin >> stringInput;
-			
 		}
+
 		while(stringInput != "X" && stringInput != "O");
 		tttB.start_game(stringInput);
+
 		while(tttB.game_over() == false)
 		{
-			cout << "Enter where the current player would like to mark the board (1-9): ";
-			cin >> stringInput;
-			
-			if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9")
-			{
-				//in future needs something to check if spot is filled 
-				tttB.mark_board(stoi(stringInput));
-				cout << "The board currently looks like this: ";
-				tttB.display_board();
-				cout << "\n";
-			}
+			cin >> tttB;
 		}
 		cout << " \n Game Over! \n";
+
 		std::string winner = tttB.get_winner();
+		tttM.save_game(tttB);
+		tttM.get_winner_totals(number_O_Wins,number_X_Wins,number_ties);
 
 		if (winner != "C")
 		{
@@ -43,15 +42,18 @@ int main()
 		{
 			cout <<"The game is a tie!";
 		}
-		cout << " \nWould you like to play again? (type y for yes and anything else for no): ";
-		cin >> stringInput;
 
+		cout << "\nThe total wins are currently: " + std::to_string(number_X_Wins) + " for X, " + std::to_string(number_O_Wins) + " for O, and " + std::to_string(number_ties) + " ties. \n";
+		cout << "\nWould you like to play again? (type y for yes and anything else for no): ";
+		
+		cin >> stringInput;
 		if(stringInput != "y")
 		{
 			exitProgram = true;
 		}
+
 	}
 	while(exitProgram == false);
-
+	cout << tttM;
 	return 0;
 }
