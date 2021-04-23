@@ -43,7 +43,7 @@ std::string TicTacToeBoard::get_player()const
 
 bool TicTacToeBoard::check_board_full()
 {
-    for(int k = 0; k < 9; k++)
+    for(int k = 0; k < pegs.size(); k++)
     {
         if(pegs[k] == " ")
         {
@@ -56,7 +56,7 @@ bool TicTacToeBoard::check_board_full()
 
 void TicTacToeBoard::clear_board()
 {
-    for(int k = 0; k < 9; k++)
+    for(int k = 0; k < pegs.size(); k++)
     {
         pegs[k] = " ";
     }
@@ -82,36 +82,15 @@ std::string TicTacToeBoard::get_winner()
 
 bool TicTacToeBoard::check_column_win()
 {
-    if(((pegs[0] == "X" && pegs[3] ==  "X" && pegs[6] == "X") || (pegs[0] == "O" && pegs[3] ==  "O" && pegs[6] == "O")) || ((pegs[1] == "X" && pegs[4] ==  "X" && pegs[7] == "X") || (pegs[1] == "O" && pegs[4] ==  "O" && pegs[7] == "O")) || ((pegs[2] == "X" && pegs[5] ==  "X" && pegs[8] == "X") || (pegs[2] == "O" && pegs[5] ==  "O" && pegs[8] == "O")))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return false;
 } 
 bool TicTacToeBoard::check_row_win()
 {
-    if(((pegs[0] == "X" && pegs[1] ==  "X" && pegs[2] == "X") || (pegs[0] == "O" && pegs[1] ==  "O" && pegs[2] == "O")) || ((pegs[3] == "X" && pegs[4] ==  "X" && pegs[5] == "X") || (pegs[3] == "O" && pegs[4] ==  "O" && pegs[5] == "O")) || ((pegs[6] == "X" && pegs[7] ==  "X" && pegs[8] == "X") || (pegs[6] == "O" && pegs[7] ==  "O" && pegs[8] == "O")))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return false;
 } 
 bool TicTacToeBoard::check_diagonal_win()
 {
-    if(((pegs[0] == "X" && pegs[4] ==  "X" && pegs[8] == "X") || (pegs[0] == "O" && pegs[4] ==  "O" && pegs[8] == "O")) || ((pegs[2] == "X" && pegs[4] ==  "X" && pegs[6] == "X") || (pegs[2] == "O" && pegs[4] ==  "O" && pegs[6] == "O"))) 
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 void TicTacToeBoard::set_winner()
 {
@@ -129,27 +108,59 @@ void TicTacToeBoard::set_winner()
 }   
 std::ostream& operator<<(std::ostream& out, const TicTacToeBoard& game)
 {
-    for(int i = 0; i < 9; i++)
+    if(game.pegs.size() == 9)
     {
-        if(i % 3 == 0)
+        for(int i = 0; i < 9; i++)
         {
-            out << "\n";
+            if(i % 3 == 0)
+            {
+                out << "\n";
+            }
+            out << game.pegs[i] + " "; 
         }
-        out << game.pegs[i] + " "; //?
+        return out;
     }
-    return out;
+    if(game.pegs.size() == 16)
+    {
+        for(int i = 0; i < 16; i++)
+        {
+            if(i % 4 == 0)
+            {
+                out << "\n";
+            }
+            out << game.pegs[i] + " "; 
+        }
+        return out;
+    }
+
 }
 std::istream& operator>>(std::istream& in, TicTacToeBoard& game)
 {
     std::string stringInput;
-    cout << "Enter where the current player would like to mark the board (1-9): ";
-    in >> stringInput;
-    if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9")
-	{
-		game.mark_board(stoi(stringInput));
-		cout << "The board currently looks like this: ";
-        cout << game;
-		cout << "\n";
-	}
-    return in;
+    if(game.pegs.size() == 9)
+    {
+        cout << "Enter where the current player would like to mark the board (1-9): ";
+        in >> stringInput;
+        if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9")
+        {
+            game.mark_board(stoi(stringInput));
+            cout << "The board currently looks like this: ";
+            cout << game;
+            cout << "\n";
+        }
+        return in;
+    }
+    if(game.pegs.size() == 16)
+    {
+        cout << "Enter where the current player would like to mark the board (1-16): ";
+        in >> stringInput;
+        if(stringInput == "1" || stringInput == "2" || stringInput == "3" || stringInput == "4" || stringInput == "5" || stringInput == "6" || stringInput == "7" || stringInput == "8" || stringInput == "9" || stringInput == "10" || stringInput == "11" || stringInput == "12" || stringInput == "13" || stringInput == "14" || stringInput == "15" || stringInput == "16")
+        {
+            game.mark_board(stoi(stringInput));
+            cout << "The board currently looks like this: ";
+            cout << game;
+            cout << "\n";
+        }
+        return in;
+    }
 }

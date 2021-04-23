@@ -1,20 +1,42 @@
+#include "tic_tac_toe.h"
 #include "tic_tac_toe_manager.h"
+#include "tic_tac_toe_3.h"
+#include "tic_tac_toe_4.h"
 #include<iostream>
 #include<string>
+#include <memory>
+using std::unique_ptr; using std::make_unique;
 using std::cin; using std::cout;
 
 int main() 
 {
 	std::string stringInput;
 	bool exitProgram;
-	TicTacToeBoard tttB;
+	unique_ptr<TicTacToeBoard> tB;
 	TicTacToeManager tttM;
 	int number_O_Wins = 0;
 	int number_X_Wins = 0;
 	int number_ties = 0;
 
+
 	do
 	{
+		do
+		{
+			cout <<"Play 3x3 tictactoe or 4x4 type 3 for 3x3 and 4 for 4x4: \n";
+			cin >> stringInput;
+			if (stringInput == "3")
+			{
+				tB= make_unique<TicTacToe3>();
+			}
+			if (stringInput == "4")
+			{
+				tB= make_unique<TicTacToe4>();
+			}
+		
+		}
+		while (stringInput != "3" && stringInput != "4");
+		
 		do
 		{
 			cout << "Who is the first player? Enter either 'X' or 'O': ";
@@ -22,16 +44,16 @@ int main()
 		}
 
 		while(stringInput != "X" && stringInput != "O");
-		tttB.start_game(stringInput);
+		tB->start_game(stringInput);
 
-		while(tttB.game_over() == false)
+		while(tB->game_over() == false)
 		{
-			cin >> tttB;
+			cin >> *tB;
 		}
-		cout << " \n Game Over! \n";
+		cout << " \nGame Over! \n";
 
-		std::string winner = tttB.get_winner();
-		tttM.save_game(tttB);
+		std::string winner = tB->get_winner();
+		tttM.save_game(tB);
 		tttM.get_winner_totals(number_O_Wins,number_X_Wins,number_ties);
 
 		if (winner != "C")
