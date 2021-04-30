@@ -3,6 +3,7 @@
 #define TIC_TAC_TOE_3_H
 
 #include "tic_tac_toe.h"
+#include<iostream>
 
 class TicTacToe3: public TicTacToeBoard
 {
@@ -15,6 +16,8 @@ class TicTacToe3: public TicTacToeBoard
         TicTacToe3():TicTacToeBoard(3)
         {
         
-        }
+        };
+        TicTacToe3(std::vector<std::string> p, std::string winner):TicTacToeBoard(p, winner){};
+ 
 };
 #endif

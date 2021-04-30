@@ -3,6 +3,17 @@
 #include<string>
 using std::cin; using std::cout;
 
+TicTacToeBoard::TicTacToeBoard(int size) 
+{ 
+    pegs.resize(size*size, ""); 
+}
+
+TicTacToeBoard::TicTacToeBoard(std::vector<std::string> p, std::string win)
+{ 
+    pegs = p; 
+    winner = win;
+}
+
 bool TicTacToeBoard::game_over()
 {
     bool column_win;
@@ -40,10 +51,14 @@ std::string TicTacToeBoard::get_player()const
 {
     return player;
 }
+std::vector<std::string> TicTacToeBoard::get_pegs()const
+{
+    return pegs;
+}
 
 bool TicTacToeBoard::check_board_full()
 {
-    for(int k = 0; k < pegs.size(); k++)
+    for(size_t k = 0; k < pegs.size(); k++)
     {
         if(pegs[k] == " ")
         {
@@ -56,7 +71,7 @@ bool TicTacToeBoard::check_board_full()
 
 void TicTacToeBoard::clear_board()
 {
-    for(int k = 0; k < pegs.size(); k++)
+    for(size_t k = 0; k < pegs.size(); k++)
     {
         pegs[k] = " ";
     }
@@ -108,6 +123,8 @@ void TicTacToeBoard::set_winner()
 }   
 std::ostream& operator<<(std::ostream& out, const TicTacToeBoard& game)
 {
+    cout << game.pegs.size();
+
     if(game.pegs.size() == 9)
     {
         for(int i = 0; i < 9; i++)

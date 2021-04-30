@@ -18,10 +18,12 @@ class TicTacToeBoard
         void mark_board(int position);
         std::string get_player()const;
         std::string get_winner();
+        std::vector<std::string> get_pegs()const;
         friend std::ostream& operator<<(std::ostream& out, const TicTacToeBoard& game);
         friend std::istream& operator>>(std::istream& in, TicTacToeBoard& game);
         TicTacToeBoard(){}
-        TicTacToeBoard(int size) { pegs.resize(size*size, ""); }
+        TicTacToeBoard(int size);
+        TicTacToeBoard(std::vector<std::string> p, std::string win);
 
     private:
         void set_next_player();

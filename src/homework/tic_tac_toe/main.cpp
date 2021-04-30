@@ -2,6 +2,7 @@
 #include "tic_tac_toe_manager.h"
 #include "tic_tac_toe_3.h"
 #include "tic_tac_toe_4.h"
+#include "tic_tac_toe_data.h"
 #include<iostream>
 #include<string>
 #include <memory>
@@ -13,12 +14,12 @@ int main()
 	std::string stringInput;
 	bool exitProgram;
 	unique_ptr<TicTacToeBoard> tB;
-	TicTacToeManager tttM;
+	TicTacToeData td;
+	TicTacToeManager tttM = TicTacToeManager(td);
 	int number_O_Wins = 0;
 	int number_X_Wins = 0;
 	int number_ties = 0;
-
-
+	
 	do
 	{
 		do

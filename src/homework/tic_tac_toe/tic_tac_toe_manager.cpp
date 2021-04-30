@@ -4,6 +4,17 @@
 #include<vector>
 using std::cin; using std::cout;
 
+
+TicTacToeManager::TicTacToeManager(TicTacToeData &d)
+{
+    data = d;
+    games = data.get_games();
+}
+
+TicTacToeManager::~TicTacToeManager()
+{
+    data.save_games(games);
+}
 void TicTacToeManager::get_winner_totals(int& o, int& x, int& t)
 {
     o = o_win;
@@ -36,7 +47,8 @@ void TicTacToeManager::update_winner_count(std::string winner)
 std::ostream& operator<<(std::ostream& out, const TicTacToeManager& manager)
 {
     cout << "All boards that have been played: ";
-    for(int i= 0; i < manager.games.size(); i++)
+    
+    for(size_t i= 0; i < manager.games.size(); i++)
     {
         out << *manager.games[i];
         cout << "\n";
